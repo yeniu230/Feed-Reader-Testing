@@ -70,14 +70,21 @@ $(function() {
          */
 
     describe('New Feed Selection', function() {
-        const contents = $('.feed').html();
+        var content1,
+            content2;
 
         beforeEach(function(done) {
-            loadFeed(2, done);
-        });
+            loadFeed(1, function() {
+                content1 = $('.feed').html();
+                loadFeed(0, function() {
+                    content2 = $('.feed').html();
+                    done();
+                });
+            });
+        }, 10000);
 
         it('should be changed', function() {
-            expect(contents).not.toBe($('.feed').html());
+            expect(content1).not.toBe(content2);
         });
     });
     /* 写一个叫做 "New Feed Selection" 的测试用例 */
